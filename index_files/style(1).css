@@ -42,6 +42,7 @@ div.news-list img.preview_picture
 }
 .page__content-top .row {
 	width: 100%;
+	margin: 0;
 }
 .promo__item {
     width: 430px;
