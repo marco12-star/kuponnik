@@ -61,6 +61,17 @@ div.news-list img.preview_picture
 	}
 	.header__middle > .d-flex.justify-content-between {
 		justify-content: flex-start !important;
+		flex-wrap: wrap;
+	}
+	.work-info {
+		width: 100%;
+		margin: 10px 0 !important;
+	}
+	.work-info__block {
+	    justify-content: flex-start !important;
+	}
+	.site-settings__btn {
+		top: -100px !important;
 	}
 }
 
