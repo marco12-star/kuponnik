@@ -15,6 +15,7 @@ div.news-list img.preview_picture
 .wrapper {
 	flex-wrap: wrap;
 }
+
 .block-menu--user {
 	background-color: #eeeeee;
     border: 1px #d2d2d2 solid;
@@ -54,9 +55,12 @@ div.news-list img.preview_picture
     height: 100%;
 }
 
-@media all and (max-width: 800px) {
+@media all and (max-width: 767px) {
 	.slogan {
 		display: none;
+	}
+	.header__middle > .d-flex.justify-content-between {
+		justify-content: flex-start !important;
 	}
 }
 
