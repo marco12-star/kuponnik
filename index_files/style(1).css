@@ -25,6 +25,7 @@ div.news-list img.preview_picture
 }
 
 .slogan {
+	display: flex;
 	width: 35%;
 	font-size: 20px;
 	font-weight: 500;
