@@ -1,0 +1,90 @@
+.producttab .tabsslider .nav-tabs li a.active::before,
+.producttab .tabsslider .nav-tabs li:hover a::before{
+    content: "";
+    width: 100%;
+    height: 3px;
+    left: 0;
+    position: absolute;
+    top: -1px;
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    -moz-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;
+    z-index: 9;
+}
+.products-list.list .product-layout .product-item-container,
+ div.tab-slider .ltabs-items-container .list.ltabs-items .product-layout .product-item-container,
+ .products-list.grid .product-layout .product-item-container, 
+ div.tab-slider .ltabs-items-container .grid.ltabs-items .product-layout .product-item-container{
+    margin: 0;
+    border: none;
+ }
+ .products-list.list .product-layout, 
+ div.tab-slider .ltabs-items-container .list.ltabs-items .product-layout{
+    padding: 0 15px;
+ }
+ .producttab .tabsslider .nav-tabs li a{
+    display: block;
+ }
+ @media (max-width: 767px){
+    .producttab .tabsslider .nav-tabs li {
+        width: 100%;
+    }
+}
+
+.damping-coupon {
+    width: 100%;
+}
+.damping-coupon .of-left {
+    margin-right: 3px;
+}
+.damping-coupon .of-right {
+    float: none;
+}
+
+.filter_coupons input, .filter_coupons select {
+    height: 34px;
+}
+
+.filter_coupons .btn-success {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+.filter_coupons .btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.filter_coupons .btn {
+    border-radius: 0;
+}
+
+.btn-default{cursor: pointer;} 
+.btn-success, .btn-default{
+    background: #89c850 !important;
+    font-size: 13px;
+    line-height: 1.3;
+    font-family: 'Opensans',sans-serif;
+    border-radius: 2px;
+    border-color: #89c850;
+    color: #fff;
+}
+
+.simple-list .selected{color:#89c850;}

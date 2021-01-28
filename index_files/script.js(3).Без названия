@@ -1,0 +1,113 @@
+(function (window) {
+    if (!!window.JCCatalogWishlist) {
+        return;
+    }
+
+    window.JCCatalogWishlist = function (params) {
+        this.obWishlist = null;
+        this.visual = params.VISUAL;
+        this.ajax = params.AJAX;
+        this.data = {};
+        this.message = params.MESSAGE;
+
+        BX.ready(BX.proxy(this.init, this));
+
+    };
+
+    window.JCCatalogWishlist.prototype.init = function () {
+        this.obWishlist = BX(this.visual.ID);
+        var self = this;
+
+        if (this.obWishlist) {
+
+            BX.bindDelegate(
+                document.body, 'click', {className: this.visual.ELEMENT_DELETE}, function(e) {
+                    e.preventDefault();
+
+                    self.data = self.setParamsAjax(this.getAttribute('data-id'),this.getAttribute('data-action'), self.ajax.params['ajax_action']);
+
+                    self.addAjaxData(self);
+                }
+            );
+
+        }
+
+        BX.bindDelegate(
+            document.body, 'click', {className: this.visual.ELEMENT_ADD}, function(e) {
+                e.preventDefault();
+                self.data = self.setParamsAjax(this.getAttribute('data-id'),this.getAttribute('data-action'), self.ajax.params['ajax_action']);
+                self.addAjaxData(self);
+
+            }
+        );
+
+    };
+    window.JCCatalogWishlist.prototype.setParamsAjax = function(id, action, ajax_action){
+        return {
+            'id_w' : id,
+            'action' : action,
+            'ajax_action' : ajax_action
+        };
+
+    };
+    window.JCCatalogWishlist.prototype.addAjaxData = function (self) {
+        BX.ajax.post(
+            self.ajax.url,
+            self.data,
+            BX.proxy(self.reload, self)
+        );
+
+    };
+
+    window.JCCatalogWishlist.prototype.updateButtons = function(self, $arResult){
+
+        var i;
+        var elements = document.querySelectorAll('.' + self.visual.ELEMENT_ADD);
+        var elementsLength = elements.length;
+
+        for(i = 0; i < elementsLength; i++){
+
+            if($arResult['ITEMS'][elements[i].getAttribute('data-id')] !== undefined){
+                if(!elements[i].classList.contains(self.visual.ELEMENT_ADD + '_added')){
+                    elements[i].classList.add(self.visual.ELEMENT_ADD + '_added');
+                }
+
+                elements[i].querySelector('span').innerHTML = self.message.in_wishlist;
+                elements[i].setAttribute('data-original-title', self.message.in_wishlist);
+            }else{
+                elements[i].classList.remove(self.visual.ELEMENT_ADD + '_added');
+                elements[i].querySelector('span').innerHTML = self.message.favorites;
+                elements[i].setAttribute('data-original-title', self.message.favorites);
+            }
+        }
+    }
+
+    window.JCCatalogWishlist.prototype.reload = function ($arResult) {
+
+        $arResult = JSON.parse($arResult);
+
+        if ($arResult['STATUS'] === 'OK') {
+
+            BX.ajax.post(
+                this.ajax.url,
+                this.ajax.reload,
+                BX.proxy(this.addResult, this)
+            );
+
+            var self = this;
+            self.updateButtons(self, $arResult);
+
+            var event = new CustomEvent('wishlist', { 'detail': $arResult });
+            window.dispatchEvent(event);
+        }
+
+    };
+
+
+    window.JCCatalogWishlist.prototype.addResult = function ($arResult) {
+        BX.closeWait(this.obWishlist);
+        this.obWishlist.innerHTML = $arResult;
+
+    };
+
+})(window);

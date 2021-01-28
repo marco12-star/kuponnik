@@ -1,0 +1,54 @@
+div.news-list
+{
+	word-wrap: break-word;
+}
+div.news-list img.preview_picture
+{
+	float:left;
+	margin:0 4px 6px 0;
+}
+.news-date-time {
+	color:#486DAA;
+}
+
+/*новые стили*/
+.wrapper {
+	flex-wrap: wrap;
+}
+.block-menu--user {
+	background-color: #eeeeee;
+    border: 1px #d2d2d2 solid;
+}
+
+.cart__btn {
+    margin-right: 40px;
+}
+
+.slogan {
+	width: 35%;
+	font-size: 20px;
+	font-weight: 500;
+}
+.banner{
+	width: 100%;
+    height: 25vh;
+}
+.banner img{
+	width: 100%;
+	height: 100%;
+}
+.info-block {
+	margin: 20px 0;
+}
+.page__content-top .row {
+	width: 100%;
+}
+.promo__item {
+    width: 430px;
+}
+.promo__item img{
+    width: 430px;
+    height: 90%;
+}
+
+/*новые стили*/

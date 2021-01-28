@@ -1,0 +1,348 @@
+window.appQuestionnaires = (function (oldAppQuestionnaires) {
+
+    oldAppQuestionnaires.rest = {
+
+        /*
+            Функция скрывает - показывает блок
+            Входящие параметры объект (
+            кнопка нажатия для показа блока,
+            контейнер,
+            класс контейнера,
+            класс активности кнопки)
+         */
+
+        toggleBlock: function (obj) {
+
+            if (!obj.btn && !obj.container && !obj.event) {
+                return;
+            }
+
+            var btn = $(obj.btn);
+            var btnClose = $(obj.btnClose);
+
+            if (obj.accordion) {
+                if (window.innerWidth > 1169) {
+                    btn.closest('.js-wrap-container').find('.js-container-first').addClass(obj.flag);
+                    btn.closest('.js-wrap-container').find('.js-container-first').find('.js-btn-first').addClass(obj.btnActive);
+                }
+            }
+
+            var setClass = function (btn) {
+
+                if (obj.accordion) {
+                    btn.closest(obj.container).siblings(obj.container).removeClass(obj.flag);
+                    btn.closest(obj.container).siblings(obj.container).find(obj.btnActive).removeClass(obj.btnActive);
+
+                    btn.closest(obj.container).toggleClass(obj.flag);
+                    btn.toggleClass(obj.btnActive);
+                } else {
+                    btn.closest(obj.container).toggleClass(obj.flag);
+                    btn.toggleClass(obj.btnActive);
+                }
+            };
+
+
+            btn.on('click', function (e) {
+                e.preventDefault();
+                setClass($(this));
+            });
+
+
+            if (btnClose.length > 0) {
+                btnClose.on('click', function (e) {
+                    e.preventDefault();
+                    var id = '#' + $(this).attr('data-id');
+                    $(id).removeClass(obj.btnActive);
+                    $(id).closest(obj.container).removeClass(obj.flag);
+                });
+            }
+
+
+        },
+        megaMenu: function (obj) {
+            var items = 13;
+            var show_items = items - 1;
+
+            $(obj.btnMore).on('click', function (e) {
+                e.preventDefault();
+                var menu = $(this).parent(obj.menu);
+
+                if ($(this).hasClass('open')) {
+                    $(menu).find(obj.item).each(function (i, el) {
+                        if (i > show_items) {
+                            $(this).slideUp(200);
+                            $(this).css('display', 'none');
+                        }
+                    });
+                    $(this).removeClass('open');
+                    $(obj.btnMore).find('.mega-menu__link').text('Все группы');
+                } else {
+                    $(menu).find(obj.item).each(function (i, el) {
+                        if (i > show_items) {
+                            $(this).slideDown(200);
+                        }
+                    });
+                    $(this).addClass('open');
+                    $(obj.btnMore).find('.mega-menu__link').text('Скрыть группы');
+                }
+            });
+
+            $('.js-icon').on('click', function (e) {
+                $(this).parent('.js-parent').toggleClass('js-open');
+            });
+        },
+        backToTop: function () {
+            var btn = $(".js-back-to-top");
+
+            btn.addClass("hidden-top");
+
+            $(window).scroll(function () {
+                if ($(this).scrollTop() === 0) {
+                    $(".back-to-top").addClass("hidden-top")
+                } else {
+                    $(".back-to-top").removeClass("hidden-top")
+                }
+            });
+
+            btn.click(function () {
+                $('body,html').animate({scrollTop: 0}, 1200);
+                return false;
+            });
+        }
+
+    };
+
+    return oldAppQuestionnaires;
+
+})(window.appQuestionnaires || {});
+
+
+$(document).ready(function () {
+
+    appQuestionnaires.rest.toggleBlock({
+        btn: '.js-btn',
+        btnActive: 'js-btn-active',
+        flag: 'js-open',
+        container: '.js-container',
+        btnClose: '.js-btn-close',
+    });
+
+    appQuestionnaires.rest.toggleBlock({
+        btn: '.js-btn-mega-menu',
+        btnActive: 'js-btn-mega-menu-active',
+        flag: 'js-open',
+        container: '.js-container',
+        btnClose: '.js-btn-close',
+        accordion: true
+    });
+
+    appQuestionnaires.rest.megaMenu({
+        btnMore: '.js-btn-more',
+        menu: '.js-menu',
+        item: '.mega-menu__item'
+    });
+
+    appQuestionnaires.rest.backToTop();
+
+    $('.js-slider').owlCarousel({
+        loop: false,
+        nav: true,
+        items: 1,
+        dots: false,
+        navText: ['<i class="slider__btn slider__btn--left"></i>', '<i class="slider__btn  slider__btn--right"></i>'],
+    });
+
+    $('.js-slider-products').owlCarousel({
+        loop: false,
+        nav: true,
+        dots: false,
+        margin: 7,
+        navText: ['<i class="arrow arrow--left"></i>', '<i class="arrow arrow--right"></i>'],
+        responsive: {
+            0: {
+                items: 2,
+                margin: 4,
+            },
+            680: {
+                items: 2,
+            },
+            1024: {
+                items: 3,
+            },
+            1380: {
+                items: 4,
+            }
+        }
+    });
+
+    $('.js-reviews-small').owlCarousel({
+        loop: false,
+        nav: true,
+        items: 1,
+        dots: false,
+        navText: ['<i class="arrow arrow--left"></i>', '<i class="arrow arrow--right"></i>'],
+    });
+
+    $('.js-brands').owlCarousel({
+        loop: false,
+        nav: true,
+        items: 7,
+        dots: false,
+        margin: 7,
+        navText: ['<i class="arrow arrow--left"></i>', '<i class="arrow arrow--right"></i>'],
+        responsive: {
+            0: {
+                items: 2,
+            },
+            680: {
+                items: 3,
+            },
+            1024: {
+                items: 5,
+            },
+            1380: {
+                items: 7,
+            }
+        }
+    });
+
+    var owl = $('.js-reviews').owlCarousel({
+        loop: false,
+        nav: false,
+        items: 1,
+        dots: true
+    });
+
+    owl.on('changed.owl.carousel', function(event) {
+       
+       var item = event.item.index; 
+       var bg = $('.js-reviews-image').eq(item).text();
+       $('.js-reviews-bg').css('backgroundImage', 'url('+bg+')');
+       
+    });
+    //Подскаки у кнопок
+    $('[data-toggle="tooltip"]').tooltip({container: 'body', offset: 0});
+
+    //Изображения
+    $('.js-image-popup').magnificPopup({
+        type: 'image',
+        closeOnContentClick: true,
+        mainClass: 'mfp-img-mobile',
+        image: {
+            verticalFit: true
+        }
+
+    });
+
+    //Любой попап
+    $('.js-popup').magnificPopup({
+        type: 'inline',
+        fixedContentPos: false,
+        fixedBgPos: true,
+        overflowY: 'auto',
+        closeBtnInside: true,
+        preloader: false,
+        midClick: true,
+        removalDelay: 300,
+        mainClass: 'my-mfp-zoom-in'
+    });
+
+   
+
+    //Маска телефона в формах
+    $('.js-phone-mask').mask('+7(999) 999-9999');
+
+    //Поиск на моб версии
+    $('.js-search').on('click', function () {
+        $('#sosearchpro').addClass('open');
+    });
+
+    $('.js-header-close').on('click', function () {
+        $('#sosearchpro').removeClass('open');
+    })
+
+    //Всплывающее окно товарв
+    $('.js-quickview').magnificPopup({
+        type:'ajax',
+        alignTop: true,
+        overflowY: 'auto',
+        ajax: {
+            settings: {
+                dataType: "html"
+            }
+        },
+        fixedContentPos: true,
+        fixedBgPos: true,
+        closeBtnInside: true,
+        preloader: true,
+        midClick: true,
+        removalDelay: 300,
+        mainClass: 'my-mfp-zoom-in'
+    });
+
+    $('.list-view .btn').each(function() {
+            var ua = navigator.userAgent,
+            event = (ua.match(/iPad/i)) ? 'touchstart' : 'click';
+            $(this).bind(event, function() {
+                $(this).addClass(function() {
+                    if($(this).hasClass('active')) return '';
+                    return 'active';
+                });
+                $(this).siblings('.btn').removeClass('active');
+                $catalog_mode = $(this).data('view');
+                display($catalog_mode);
+            });
+
+        });
+
+
+});
+
+function display(view) {
+
+    // common code for all types of view
+    $('.products-list').removeClass('list grid ps_table').addClass(view);
+    $('.list-view .btn').removeClass('active');
+    $('.list-view .' + view).addClass('active');
+
+    // show or hide views individually depending on which type is selected
+    displayList(view == 'list' || view == 'ps_table');
+    displayGird(view == 'grid');
+    displayPSTable(view == 'ps_table');
+
+    // common code for all types of view
+    $.cookie('display', view);
+}
+
+function displayGird(show) {
+    if (show) {
+        // code to show the grid view 
+    } else {
+        // code to hide the grid view
+    }
+}
+
+function displayPSTable(show) {
+    if (show) {
+        // code to show the ps-table view 
+    } else {
+        // code to hide the ps-table view
+    }
+}
+
+function displayList(show) {
+    if (show) {
+        // code to show the list view 
+        $('.products-list .product-layout').addClass('col-lg-12');
+        $('.products-list .product-layout .left-block').addClass('col-md-4');
+        $('.products-list .product-layout .right-block').addClass('col-md-8');
+        $('.products-list .product-layout .item-desc').removeClass('hidden');
+    } else {
+        // code to hide the list view
+        $('.products-list .product-layout').removeClass('col-lg-12');
+        $('.products-list .product-layout .left-block').removeClass('col-md-4');
+        $('.products-list .product-layout .right-block').removeClass('col-md-8');
+        $('.products-list .product-layout .item-desc').addClass('hidden');
+    }
+}
+
