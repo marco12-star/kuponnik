@@ -45,11 +45,18 @@ div.news-list img.preview_picture
 	margin: 0;
 }
 .promo__item {
-    width: 430px;
+    width: 32%;
 }
 .promo__item img{
-    width: 430px;
-    height: 90%;
+    width: 100%;
+    max-width: 430px;
+    height: 100%;
+}
+
+@media all and (max-width: 800px) {
+	.slogan {
+		display: none;
+	}
 }
 
 /*новые стили*/
